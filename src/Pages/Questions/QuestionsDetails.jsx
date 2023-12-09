@@ -120,12 +120,14 @@ const QuestionsDetails = () => {
                     </div>
                     <div style={{ width: "100%" }}>
                       <p className="question-body">{question.questionBody}</p>
+                      <div style={{display:"flex",alignItems:"center",justifyContent:"space-evenly"}}>
                       {
-                       question.fileUrl? <a href={question.fileUrl} target="_blank" rel="noreferrer"><p>Show File</p></a>:""
+                       question.fileUrl? <a href={question.fileUrl} target="_blank" rel="noreferrer" style={{width:"80%"}}><img src={question.fileUrl} alt="img" style={{width:"55%"}}/></a>:""
                        }
                        {
                         question.QuestionCode ?  <button onClick={showCode} className="nav-links" style={{marginBottom:"10px"}}>{showCodeEditor}</button> : ""
                        }
+                       </div>
                       <div className="question-details-tags">
                         {question.questionTags.map((tag) => (
                           <p key={tag}>{tag}</p>

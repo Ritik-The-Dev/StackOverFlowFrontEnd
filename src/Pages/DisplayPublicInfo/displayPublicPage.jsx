@@ -1,5 +1,6 @@
 import {React,useEffect,useState}from 'react'
 import './displayPublic.css'
+import moment from "moment";
 import { Link} from 'react-router-dom';
 
 const DisplayPublicPage = () => {
@@ -104,8 +105,8 @@ const gotoTweet = ()=>{
             <div className="box1" key={index}>
             <p className='messsss'>{e.tweet}</p>
           <div className="extra-Details">
-          <p>Posted by -: <span className='postee'>anonymous</span ></p>
-          <p>postedAt -: <span className='postee'>{e.createAt}</span></p>
+          <p>Posted by -: <span className='postee'>{e.postedBy}</span ></p>
+          <p>postedAt -: <span className='postee'>{moment(e.createAt).fromNow()}</span></p>
           </div>
           </div>
           )
@@ -126,8 +127,8 @@ const gotoTweet = ()=>{
             </a>
             <p>{e.imageCaption}</p>
           <div className="extra-Details">
-          <p>Posted by -: <span className='postee'>anonymous</span ></p>
-          <p>postedAt -: <span className='postee'>{e.createAt}</span></p>
+          <p>Posted by -: <span className='postee'>{e.postedBy}</span ></p>
+          <p>postedAt -: <span className='postee'>{moment(e.createAt).fromNow()}</span></p>
           </div>
           </div>
           )
@@ -149,8 +150,8 @@ const gotoTweet = ()=>{
             <button className='nav-links'>Play in Custom Video Player</button>
           </Link>
           <div className="extra-Details">
-          <p>Posted by -: <span className='postee'>anonymous</span ></p>
-          <p>postedAt -: <span className='postee'>{e.createAt}</span></p>
+          <p>Posted by -: <span className='postee'>{e.postedBy}</span ></p>
+          <p>postedAt -: <span className='postee'>{moment(e.createAt).fromNow()}</span></p>
           </div>
           </div>
           )

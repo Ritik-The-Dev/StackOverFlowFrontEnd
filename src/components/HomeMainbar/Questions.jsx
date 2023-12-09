@@ -29,7 +29,7 @@ const Questions = ({ question }) => {
             ))}
           </div>
           {
-           question.fileUrl? <a href={question.fileUrl} target="_blank" rel="noreferrer"><p>Show File</p></a>:""
+           question.fileUrl? <a href={question.fileUrl} target="_blank" rel="noreferrer"><img src={question.fileUrl} alt="img" style={{width:"8rem"}}/></a>:""
           }
           <p className="display-time">
             asked {moment(question.askedOn).fromNow()} {question.userPosted}
