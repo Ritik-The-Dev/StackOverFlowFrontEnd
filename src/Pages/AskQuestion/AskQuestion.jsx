@@ -23,7 +23,6 @@ const AskQuestion = () => {
   //
 
   const handleSubmit = (e) => {
-    console.log(QuestionCode)
   e.preventDefault();
   if (User) {
     if (questionTitle && questionBody && questionTags && QuestionCode && file) {
@@ -34,9 +33,8 @@ const AskQuestion = () => {
       formData.append("QuestionCode", QuestionCode);
       formData.append("userPosted", User.result.name);
       formData.append("file", file);
-
+      
       dispatch(askQuestion(formData, navigate));
-      alert("Question is Uploading");
     } else {
       alert("All Fields are Mandatory");
     }

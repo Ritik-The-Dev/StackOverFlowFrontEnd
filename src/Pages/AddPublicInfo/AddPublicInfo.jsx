@@ -6,17 +6,22 @@ import LeftSidebar from '../../components/LeftSidebar/LeftSidebar';
 import RightSidebar from '../../components/RightSidebar/RightSidebar';
 import badWords from 'bad-words-next'
 import en from 'bad-words-next/data/en.json'
-
 import Filter from 'bad-words'
+import abusiveWords from './abusiveWords.json';
+//
+import {
+	RegExpMatcher,
+	englishDataset,
+	englishRecommendedTransformers,
+} from 'obscenity';
+const matcher = new RegExpMatcher({
+	...englishDataset.build(),
+	...englishRecommendedTransformers,
+});
+//
+
 const filter = new Filter();
-const abusiveWords = [
-  'suck','Sucks','Suck','SUCK',"shit","shit ass","shite","sisterfucker","slut","son of a whore","son of a bitch","spastic","sweet Jesus","arse","arsehead","arsehole","ass","asshole", "bastard", "bitch", "bloody", "bollocks", "brotherfucker",
-  "bugger","bullshit","child-fucker", "Christ on a bike", "Christ on a cracker", "cock", "cocksucker","crap","cunt"," cyka blyat","damn","damn it","dick","dickhead", "dyke","fatherfucker","frigger", "fuck","hell", "holy shit","horseshit","in shit","kike",   "motherfucker","nigga", "nigra","pigfucker","piss","prick","pussy","turd","twat","wanker",
-];
-
-filter.addWords(...abusiveWords);
-
-
+filter.addWords(...abusiveWords.abusiveWords);
 const BADWORDS = new badWords({ data: en })
 
 const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
@@ -38,12 +43,8 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
         let email = await User.result.email
         let postedBy = await User.result.name
          if(tweet !== ""){
-          const badWordDetect = BADWORDS.check(tweet);
-         if(badWordDetect === true){
-          settweet('');
-          return alert(" Cannot Post Bad Word Detected")
-        }
-        if(filter.isProfane(tweet) === true){
+          const badWordDetect = BADWORDS.check(tweet.toLowerCase());
+         if(badWordDetect === true || matcher.hasMatch(tweet.toLowerCase()) || filter.isProfane(tweet.toLowerCase()) === true){
           settweet('');
           return alert(" Cannot Post Bad Word Detected")
         }

@@ -218,9 +218,12 @@ const QuestionsDetails = () => {
                 </section>
                 <div className="CodeAreas hidden">
                 <h1>Uploaded Code</h1>
-                <textarea className="textareas" readOnly>
-                  {question.QuestionCode}
-                </textarea>
+                  <iframe  
+                   title="Embedded Content"
+                   width="100%"
+                   height="500px"
+                   frameBorder="2px"
+                  srcDoc={question.QuestionCode}/>
                 </div>
               </div>
             ))}

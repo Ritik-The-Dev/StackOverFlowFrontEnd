@@ -7,20 +7,6 @@ const RichTextEditor = ({setcodevalue}) => {
     setcodevalue(e.target.innerHTML);
   };
   
-  const commands = {
-    B: 'bold',
-    I: 'italic',
-    U: 'underline',
-    $: 'strikethrough',
-    Undo: 'undo',
-    Redo: 'redo',
-    Left: 'justifyLeft',
-    Center: 'justifyCenter',
-    Right: 'justifyRight',
-    OrderedList: 'insertOrderedList',
-    UnorderedList: 'insertUnorderedList',
- };
-
  const handleClick = (command) => {
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
@@ -33,21 +19,37 @@ const RichTextEditor = ({setcodevalue}) => {
       selection.addRange(range);
     }
  };
+const commands = {
+  B: 'bold',
+  I: 'italic',
+  U: 'underline',
+  $: 'strikethrough',
+  Undo: 'undo',
+  Redo: 'redo',
+  Left: 'justifyLeft',
+  Center: 'justifyCenter',
+  Right: 'justifyRight',
+  OrderedList: 'insertOrderedList',
+  UnorderedList: 'insertUnorderedList',
+};
 
- const renderToolbar = () => {
-    return (
-      <div className="toolbar">
-        {Object.keys(commands).map((command) => (
-          <button
-          style={{marginRight:"10px"}}
-            key={command}
-            className="option-button"
-            id={commands[command]}
-            onClick={() => handleClick(commands[command])}>
-            {command}
-          </button>
-        ))}
-      </div>);};
+const renderToolbar = () => {
+  return (
+    <div className="toolbar">
+      {Object.keys(commands).map((command) => (
+        <button
+          style={{ marginRight: "10px" }}
+          key={command}
+          className="option-button"
+          id={commands[command]}
+          onClick={() => handleClick(commands[command])}>
+          {command}
+        </button>
+      ))}
+    </div>
+  );
+};
+
 
   useEffect(() => {
     const advancedOptionButton = document.querySelectorAll('.adv-option-button');
@@ -138,14 +140,16 @@ const RichTextEditor = ({setcodevalue}) => {
         <div className="main" style={{border:"2px solid"}}>
       <div className="options">
          {renderToolbar()}
-        <select id="formatBlock" className="adv-option-button" style={{marginRight:"20px"}}>
-          <option value="H1">H1</option>
-          <option value="H2">H2</option>
-          <option value="H3">H3</option>
-          <option value="H4">H4</option>
-          <option value="H5">H5</option>
-          <option value="H6">H6</option>
-        </select>
+<select id="formatBlock" className="adv-option-button" style={{ marginRight: "20px" }}>
+<option value="p">Paragraph</option>
+  <option value="H1">H1</option>
+  <option value="H2">H2</option>
+  <option value="H3">H3</option>
+  <option value="H4">H4</option>
+  <option value="H5">H5</option>
+  <option value="H6">H6</option>
+</select>
+
         <select id="fontName" className="adv-option-button" style={{marginRight:"20px"}}></select>
         <select id="fontSize" className="adv-option-button" style={{marginRight:"20px"}}></select>
         <div className="input-wrapper">
