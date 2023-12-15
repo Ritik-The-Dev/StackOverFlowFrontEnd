@@ -34,8 +34,6 @@ const Navbar = ({ handleSlideIn }) => {
     if (token) {
       const decodedToken = decode(token);
       if (decodedToken.exp * 1000 < new Date().getTime()) {
-        alert("Your Token is Expired")
-        handleLogout();
       }
     }
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
