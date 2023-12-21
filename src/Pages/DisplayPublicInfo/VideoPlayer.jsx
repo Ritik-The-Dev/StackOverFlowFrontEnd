@@ -5,6 +5,7 @@ import './displayPublic.css';
 function VideoPlayer() {
 
   const { videoUrl } = useParams();
+  
 
   const videoRef = useRef(null);
   let holdTimeout;
@@ -68,13 +69,13 @@ function VideoPlayer() {
     }
   };
  return (
-    <div>
+    <div style={{position:"absolute",background:"black",zIndex:"20",left:"0",top:"0",height:"100vh",overflow:"hidden"}}>
       <div>
         <video
           ref={videoRef}
           className=" mainVideo"
           loop
-          controls
+
         >
           <source src={videoUrl} />
         </video>

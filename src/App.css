@@ -21,6 +21,8 @@
 .morning{
   color:black;
   background-color: white !important;
+  margin-left: -9px;
+  margin-right: -9px;
 }
 .morning a{
   color: gray;
@@ -28,6 +30,8 @@
 .eveningTime{
   color:white;
   background-color: #000814 !important;
+  margin-left: -9px;
+  margin-right: -9px;
 }
 .eveningTime a{
   color: white;

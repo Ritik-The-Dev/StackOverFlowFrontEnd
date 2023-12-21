@@ -145,11 +145,9 @@ const gotoTweet = ()=>{
         video.map((e,index)=>{
           return(
             <div className="box1" key={index}>
-            <video src={e.videoUrl} alt="videoLoading" style={{width:"100%",height:"30vh",borderRadius:"1rem"}} controls />
+              <Link to={`/VideoPlayer/${encodeURIComponent(e.videoUrl)}`}>
+            <video src={e.videoUrl} alt="videoLoading" style={{width:"100%",height:"30vh",borderRadius:"1rem"}}/></Link>
             <p><span className='postee'>Caption -: </span>{e.videoCaption}</p>
-            <Link to={`/VideoPlayer/${encodeURIComponent(e.videoUrl)}`}>
-            <button className='nav-links'>Play in Custom Video Player</button>
-          </Link>
           <div className="extra-Details">
           <p>Posted by -: <span className='postee'>{e.postedBy}</span ></p>
           <p>postedAt -: <span className='postee'>{moment(e.createAt).fromNow()}</span></p>
