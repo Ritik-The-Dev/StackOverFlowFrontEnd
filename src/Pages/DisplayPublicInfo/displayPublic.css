@@ -57,3 +57,24 @@
     height: 100vh;
     width: 45vw;
 }
+
+
+progress[value] {
+    width: 100%;
+    appearance: none;   
+    background-color: #eee;
+    border: none;
+    border-radius: 5px;
+   }
+   progress[value]::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 5px;
+   }
+   progress[value]::-webkit-progress-value {
+    background-color: #4caf50;
+    border-radius: 5px;
+   }
+   progress[value]::-moz-progress-bar {
+    background-color: #4caf50;
+    border-radius: 5px;
+   }
