@@ -21,7 +21,7 @@ const updateProgress = () => {
       e.preventDefault();
       videoRef.current.currentTime += 10;
       if (videoRef.current) {
-      if(videoRef.current.playbackRate = 2){
+      if(videoRef.current.playbackRate === 2){
         videoRef.current.playbackRate = 1;
       }
     }}
@@ -33,7 +33,7 @@ const updateProgress = () => {
       videoRef.current.currentTime -= 5;
     }
     if (videoRef.current) {
-      if(videoRef.current.playbackRate = 2){
+      if(videoRef.current.playbackRate === 2){
         videoRef.current.playbackRate = 1;
       }
     }
@@ -68,7 +68,7 @@ const updateProgress = () => {
   const handleLeftHoldStart = () => {
     holdTimeout = setInterval(() => {
       if (videoRef.current) {
-        if(videoRef.current.playbackRate = 2){
+        if(videoRef.current.playbackRate === 2){
           videoRef.current.playbackRate = 1;
         }
       }
@@ -78,7 +78,7 @@ const updateProgress = () => {
   const handleLeftHoldEnd = () => {
     clearInterval(holdTimeout);
     if (videoRef.current) {
-      if(videoRef.current.playbackRate = 2){
+      if(videoRef.current.playbackRate === 2){
         videoRef.current.playbackRate = 1;
       }
     }
