@@ -7,6 +7,8 @@ function VideoPlayer() {
   const { videoUrl } = useParams();
   const [progress, setProgress] = useState(0);
 const [videoTime, setVideoTime] = useState("00:00");
+const [leftHoldActive, setLeftHoldActive] = useState(false);
+
 const updateProgress = () => {
   if (videoRef.current) {
     setProgress(videoRef.current.currentTime / videoRef.current.duration * 100);
@@ -66,25 +68,19 @@ const updateProgress = () => {
   };
 
   const handleLeftHoldStart = () => {
-    holdTimeout = setInterval(() => {
-      if (videoRef.current) {
-        if(videoRef.current.playbackRate === 2){
-          videoRef.current.playbackRate = 1;
-        }
-      }
-    }, 1000);
+     setLeftHoldActive(true);
   };
 
   const handleLeftHoldEnd = () => {
-    clearInterval(holdTimeout);
-    if (videoRef.current) {
-      if(videoRef.current.playbackRate === 2){
-        videoRef.current.playbackRate = 1;
-      }
-    }
+    setLeftHoldActive(false);
   };
   
 useEffect(() => {
+  const interval1 = setInterval(() => {
+    if (leftHoldActive && videoRef.current) {
+      videoRef.current.playbackRate = 1;
+    }
+  }, 1000);
   const interval = setInterval(updateProgress, 1000);
   if (videoRef.current) {
     const currentTime = videoRef.current.currentTime;
@@ -92,8 +88,8 @@ useEffect(() => {
     const minutes = Math.floor(currentTime / 60);
     setVideoTime(`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
  }
-  return () => clearInterval(interval);
-}, [handleMiddle,progress]);
+  return () => clearInterval(interval,interval1);
+}, [handleMiddle,progress,leftHoldActive]);
  return (
     <div style={{position:"absolute",background:"black",zIndex:"20",left:"0",top:"0",height:"100vh",overflow:"hidden"}}>
       <div>
