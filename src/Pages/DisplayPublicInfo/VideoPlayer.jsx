@@ -68,7 +68,9 @@ const updateProgress = () => {
   const handleLeftHoldStart = () => {
     holdTimeout = setInterval(() => {
       if (videoRef.current) {
-        videoRef.current.playbackRate = 1; 
+        if(videoRef.current.playbackRate = 2){
+          videoRef.current.playbackRate = 1;
+        }
       }
     }, 1000);
   };
@@ -76,7 +78,9 @@ const updateProgress = () => {
   const handleLeftHoldEnd = () => {
     clearInterval(holdTimeout);
     if (videoRef.current) {
-      videoRef.current.playbackRate = 1; 
+      if(videoRef.current.playbackRate = 2){
+        videoRef.current.playbackRate = 1;
+      }
     }
   };
   
