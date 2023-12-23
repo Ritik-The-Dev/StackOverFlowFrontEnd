@@ -22,6 +22,7 @@
     "moment": "^2.29.4",
     "natural": "^6.10.4",
     "obscenity": "^0.1.4",
+    "plyr": "^3.7.8",
     "profanity-filter": "^0.2.1",
     "profanity-matcher": "^1.0.1",
     "react": "^18.2.0",
