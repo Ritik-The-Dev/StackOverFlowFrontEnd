@@ -1,0 +1,37 @@
+.notification {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 30;
+   }
+   .notification {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 30;
+   }
+   
+   .notification.left {
+    left: 10px;
+    background-color: rgba(0, 0, 255, 0.8);
+   }
+   
+   .notification.right {
+    right: 10px;
+    background-color: rgba(255, 0, 0, 0.8);
+   }
+   .notification.left {
+    left: 10px;
+    background-color: rgba(0, 0, 255, 0.8);
+   }
+   
+   .notification.right {
+    right: 10px;
+    background-color: rgba(255, 0, 0, 0.8);
+   }
