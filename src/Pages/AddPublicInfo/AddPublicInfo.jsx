@@ -40,6 +40,7 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
     //tweet upload
     const tweetUpload = async ()=>{
     try{
+      if (User){
         let email = await User.result.email
         let postedBy = await User.result.name
          if(tweet !== ""){
@@ -47,10 +48,6 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
          if(badWordDetect === true || matcher.hasMatch(tweet.toLowerCase()) || filter.isProfane(tweet.toLowerCase()) === true){
           settweet('');
           return alert(" Cannot Post Bad Word Detected")
-        }
-        if (User === null) {
-          Navigate("/Auth");
-         return alert("Login or Signup to Post Tweet");
         }
         const data = await fetch(`https://stackbackend-9z32.onrender.com/user/AddTweet`, {
             method: 'POST',
@@ -73,6 +70,9 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
         alert("Cant Tweet Empty")
       }
     }
+    else{
+      alert("Login to Post a Tweet")
+    }}
     catch(err){
         console.log(err);
     }
@@ -87,7 +87,7 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
 
     const uploadImage = async ()=>{
            try{
-
+            if(User){
             let email = await User.result.email
         let postedBy = await User.result.name
 
@@ -95,7 +95,7 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
                 alert('No image selected.');
                 return;
               }
-              if (User === null) {
+              if (!User) {
                 Navigate("/Auth");
                return alert("Login or Signup to Post Images");
               }
@@ -132,6 +132,9 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
             }
             else{
                 alert("Error in Image Upload");
+            }}
+            else{
+              alert("Login to Post a Image")
             }
            }
            catch(err){
@@ -149,6 +152,7 @@ const AddPublicInfo = ({ slideIn, handleSlideIn }) => {
 
 const uploadVideo = async ()=>{
     try{
+      if(User){
       let email = await User.result.email
         let postedBy = await User.result.name
 
@@ -157,7 +161,7 @@ const uploadVideo = async ()=>{
             return;
           }
 
-          if (User === null) {
+          if (!User) {
             Navigate("/Auth");
            return alert("Login or Signup to Post Videos");
           }
@@ -194,6 +198,9 @@ const uploadVideo = async ()=>{
         alert("Error in Video Upload");
     }
     }
+    else{
+      alert("Login to Post a Video")
+    }}
     catch(err){
      console.log(err)
     }
