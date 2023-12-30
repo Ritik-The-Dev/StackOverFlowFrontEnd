@@ -1,70 +1,109 @@
-import React, { useRef, useEffect } from 'react';
-import 'plyr/dist/plyr.css';
-import Plyr from 'plyr';
+import { useRef, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './displayPublic.css';
 
-function Videoplayer() {
-  const vid = useParams();
-  const player = useRef(null);
+function VideoPlayer() {
 
-  useEffect(() => {
-    if (player.current) {
-      const plyr = new Plyr(player.current, {
-        fullscreen: { enabled: false, fallback: false },
-        clickToPlay: false,
-      });
+  const { videoUrl } = useParams();
 
-      let mouse, intervalId;
-      let isLeftSideHeld = false;
+  const videoRef = useRef(null);
+  let holdTimeout;
 
-      plyr.on('dblclick', (e) => {
-        if (e.clientX < 300) {
-          plyr.rewind(5);
-        } else if (e.clientX < 500 && e.clientX > 300) {
-          plyr.togglePlay();
-        } else if (e.clientX < 800) {
-          plyr.forward(10);
-        }
-      });
+  const handleRightTap = (e) => {
+    if (videoRef.current) {
+      e.preventDefault();
+      videoRef.current.currentTime += 10;
+      if (videoRef.current) {
+      if(videoRef.current.playbackRate === 2){
+        videoRef.current.playbackRate = 1;
+      }
+    }}
+  };
 
-      plyr.on('mousedown', (e) => {
-        mouse = setTimeout(() => {
-          if (e.clientX > 500) {
-            plyr.speed = 2;
-          }
-          if (e.clientX < 300) {
-            isLeftSideHeld = true;
-            intervalId = setInterval(() => {
-              if (plyr.currentTime <= 0) {
-                clearInterval(intervalId);
-              } else {
-                plyr.rewind(0.05);
-              }
-            }, 10);
-          }
-        }, 500);
-      });
-
-      plyr.on('mouseup', () => {
-        clearTimeout(mouse);
-        clearInterval(intervalId);
-        if (isLeftSideHeld) {
-          plyr.speed = 1;
-          isLeftSideHeld = false;
-        }
-      });
+  const handleLeftTap = (e) => {
+    if (videoRef.current) {
+      e.preventDefault();
+      videoRef.current.currentTime -= 5;
     }
-  }, []);
+  };
 
-  return (
-    <div style={{ marginTop: '50px', height:"100vh" }}>
-      <div style={{ width: '800px', height: '450px' }}>
-        <video controls ref={player} style={{ width: '800px', height: '450px' }}>
-          <source src={vid.videoUrl} type="video/mp4" />
+  const handleMiddle = (e) => {
+    if (videoRef.current) {
+      e.preventDefault();
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  };
+
+  const handleRightHoldStart = () => {
+    holdTimeout = setInterval(() => {
+      if (videoRef.current) {
+        videoRef.current.playbackRate = 2; 
+      }
+    }, 1000);
+  };
+
+  const handleRightHoldEnd = () => {
+    clearInterval(holdTimeout);
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 2; 
+    }
+  };
+
+  const handleLeftHoldStart = () => {
+    holdTimeout = setInterval(() => {
+      if (videoRef.current) {
+        videoRef.current.playbackRate = 1; 
+      }
+    }, 1000);
+  };
+
+  const handleLeftHoldEnd = () => {
+    clearInterval(holdTimeout);
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 1; 
+    }
+  };
+ return (
+    <div style={{position:"absolute",background:"black",zIndex:"20",left:"0",top:"0",height:"100vh",overflow:"hidden"}}>
+      <div>
+        <video
+          ref={videoRef}
+          className=" mainVideo"
+          loop
+        >
+          <source src={videoUrl} />
         </video>
       </div>
+      <div className="mainVideo1">
+        <div
+          className="mainVideo2"
+          onDoubleClick={handleLeftTap}
+          onMouseDown={handleLeftHoldStart}
+          onMouseUp={handleLeftHoldEnd}
+          onTouchStart={handleLeftHoldStart}
+          onTouchEnd={handleLeftHoldEnd}
+        ></div>
+
+        <div
+          className="mainVideo3"
+          onDoubleClick={handleMiddle}
+        ></div>
+
+        <div
+          className=" mainVideo4"
+          onDoubleClick={handleRightTap}
+          onMouseDown={handleRightHoldStart}
+          onMouseUp={handleRightHoldEnd}
+          onTouchStart={handleRightHoldStart}
+          onTouchEnd={handleRightHoldEnd}
+        ></div>
+      </div>
     </div>
-  );
+ );
 }
 
-export default Videoplayer;
+export default VideoPlayer;
