@@ -53,11 +53,6 @@ function Videoplayer() {
           isLeftSideHeld = false;
         }
       });
-
-      // Cleanup: Remove Event Listeners
-      return () => {
-        // Remove event listeners here
-      };
     }
   }, []);
 
