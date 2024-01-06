@@ -7,6 +7,9 @@ const DisplayPublicPage = () => {
   const [tweet,setTweet] = useState([]);
   const [image,setimage] = useState([]);
   const [video,setvideo] = useState([]);
+  const [videoLoading,setvideoLoading] = useState(true);
+  const [imageLoading,setimageLoading] = useState(true);
+  const [tweetLoading,settweetLoading] = useState(true);
 
 
 
@@ -18,6 +21,7 @@ const DisplayPublicPage = () => {
   })
   const res = await data.json()
   setTweet(res.data);
+  settweetLoading(false)
   }
   catch(err){
       console.log(err)
@@ -32,6 +36,7 @@ const DisplayPublicPage = () => {
     })
     const res = await data.json()
     setimage(res.data);
+    setimageLoading(false)
     }
     catch(err){
       console.log(err)
@@ -46,6 +51,7 @@ const DisplayPublicPage = () => {
     })
     const res = await data.json()
     setvideo(res.data);
+    setvideoLoading(false)
     }
     catch(err){
       console.log(err)
@@ -100,6 +106,8 @@ const gotoTweet = ()=>{
       <div className="tweeeet">
         <h1 style={{textAlign:"center"}}>Tweet Section</h1>
       {
+        tweetLoading === true ? <h1 style={{marginTop:"2rem" ,fontFamily:"cursive"}}>Tweet is Loading From Backend. It may Take Few Minutes...</h1>  
+        :
         tweet.map((e,index)=>{
           return(
             <div className="box1" key={index}>
@@ -119,6 +127,8 @@ const gotoTweet = ()=>{
        <div className="imgggg hidden">
         <h1 style={{textAlign:"center"}}>Image Section</h1>
        {
+        imageLoading === true ? <h1 style={{marginTop:"2rem" ,fontFamily:"cursive"}}>Images are Loading From Backend. It may Take Few Minutes...</h1>  
+        :
         image.map((e,index)=>{
           return(
             <div className="box1" key={index}>
@@ -142,6 +152,8 @@ const gotoTweet = ()=>{
                  <div className="vidddd hidden">
         <h1 style={{textAlign:"center"}}>Video Section</h1>
         {
+            videoLoading === true ? <h1 style={{marginTop:"2rem" ,fontFamily:"cursive"}}>Videos are Loading From Backend. It may Take Few Minutes...</h1>  
+            :
         video.map((e,index)=>{
           return(
             <div className="box1" key={index}>

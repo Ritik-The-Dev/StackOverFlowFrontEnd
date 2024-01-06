@@ -34,7 +34,7 @@ const HomeMainbar = () => {
       </div>
       <div>
         {questionsList.data === null ? (
-          <h1>Loading...</h1>
+          <h1 style={{marginTop:"2rem" ,fontFamily:"cursive"}}>Loading... <br /> <br /> BackEnd is Uploaded on Rendere it may take few minutes to render..</h1>
         ) : (
           <>
             <p>{questionsList.data.length} questions</p>

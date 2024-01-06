@@ -1,62 +1,73 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Videoplayer() {
-  const [isRightSideHeld, setIsRightSideHeld] = useState(false);
-  const videoRef = useRef(null);
-  const { videoUrl } = useParams();
+  const vid = useParams();
+  const player = useRef(null);
 
   useEffect(() => {
-    const video = videoRef.current;
+    if (player.current) {
+      let mouse, intervalId;
+      let isLeftSideHeld = false;
 
-    const handleDblClick = (e) => {
-      if (e.clientX < 300) {
-        video.currentTime -= 5;
-      } else if (e.clientX < 500 && e.clientX > 300) {
-        video.paused ? video.play() : video.pause();
-      } else if (e.clientX < 800) {
-        video.currentTime += 10;
-      }
-    };
+      const handleDoubleClick = (e) => {
+        if (e.clientX < 300) {
+          player.current.currentTime -= 5;
+        } else if (e.clientX < 500 && e.clientX > 300) {
+          if (player.current.paused) {
+            player.current.play();
+          } else {
+            player.current.pause();
+          }
+        } else if (e.clientX < 800) {
+          player.current.currentTime += 10;
+        }
+      };
 
-    const handleMouseDown = (e) => {
-      if (e.clientX > 500) {
-        setIsRightSideHeld(true);
-        video.playbackRate = 2;
-      }
-    };
+      const handleMouseDown = (e) => {
+        mouse = setTimeout(() => {
+          if (e.clientX > 500) {
+            player.current.playbackRate = 2;
+          }
+          if (e.clientX < 300) {
+            isLeftSideHeld = true;
+            intervalId = setInterval(() => {
+              if (player.current.currentTime <= 0) {
+                clearInterval(intervalId);
+              } else {
+                player.current.currentTime -= 0.05;
+              }
+            }, 10);
+          }
+        }, 500);
+      };
 
-    const handleMouseUp = () => {
-      if (isRightSideHeld) {
-        setIsRightSideHeld(false);
-        video.playbackRate = 1;
-      }
-    };
+      const handleMouseUp = () => {
+        clearTimeout(mouse);
+        clearInterval(intervalId);
+        if (isLeftSideHeld) {
+          player.current.playbackRate = 1;
+          isLeftSideHeld = false;
+        }
+      };
 
-    const handleFullscreen = () => {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      }
-    };
+      player.current.addEventListener('dblclick', handleDoubleClick);
+      player.current.addEventListener('mousedown', handleMouseDown);
+      document.addEventListener('mouseup', handleMouseUp);
 
-    video.addEventListener('dblclick', handleDblClick);
-    video.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    video.addEventListener('fullscreenchange', handleFullscreen);
-
-    return () => {
-      video.removeEventListener('dblclick', handleDblClick);
-      video.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      video.removeEventListener('fullscreenchange', handleFullscreen);
-    };
-  }, [isRightSideHeld]);
+      return () => {
+        player.current.removeEventListener('dblclick', handleDoubleClick);
+        player.current.removeEventListener('mousedown', handleMouseDown);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, []);
 
   return (
-    <div style={{ marginTop: '50px', height: '100vh' }}>
+    <div style={{ marginTop: '50px', height:"100vh" }}>
       <div style={{ width: '800px', height: '450px' }}>
-        <video controls ref={videoRef} style={{ width: '800px', height: '450px' }}>
-          <source src={videoUrl} type="video/mp4" />
+        <video controls controlsList="nofullscreen" ref={player} style={{ width: '800px', height: '450px' }}>
+          <source src={vid.videoUrl} type="video/mp4" />
         </video>
       </div>
     </div>
