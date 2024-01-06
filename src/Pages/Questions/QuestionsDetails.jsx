@@ -122,7 +122,7 @@ const QuestionsDetails = () => {
                       <p className="question-body">{question.questionBody}</p>
                       <div style={{display:"flex",alignItems:"center",justifyContent:"space-evenly"}}>
                       {
-                       question.fileUrl? <a href={question.fileUrl} target="_blank" rel="noreferrer" style={{width:"80%"}}><img src={question.fileUrl} alt="img" style={{width:"55%"}}/></a>:""
+                       question.fileUrl? <a href={question.fileUrl} target="_blank" rel="noreferrer" style={{width:"80%"}}><img src={question.fileUrl} alt="img" style={{width:"80%"}}/></a>:""
                        }
                        {
                         question.QuestionCode ?  <button onClick={showCode} className="nav-links" style={{marginBottom:"10px"}}>{showCodeEditor}</button> : ""

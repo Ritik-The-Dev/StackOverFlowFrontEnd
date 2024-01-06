@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import "./AskQuestion.css";
 import { askQuestion } from "../../actions/question";
 
@@ -65,7 +65,10 @@ const AskQuestion = () => {
   return (
     <div className="ask-question">
       <div className="ask-ques-container">
+        <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
         <h1>Ask a public Question</h1>
+        <Link to={"/"}><button className="review-btn">Back to Home</button></Link>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="ask-form-container">
             <label htmlFor="ask-ques-title">
@@ -135,7 +138,7 @@ const AskQuestion = () => {
             className="review-btn"
           />
         </form>
-            <div className="textEditor hidden">
+            <div className="textEditor hidden" style={{height:"100vh"}}>
               <RichTextEditor setcodevalue={setQuestionCode}/>
               </div>
       </div>

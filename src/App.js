@@ -52,7 +52,7 @@ function App() {
   }
 }
   return (
-    <div className="App">
+    <div className="App" style={{overflowY:"none"}}>
       <Router>
         <Navbar handleSlideIn={handleSlideIn} />
         <AllRoutes slideIn={slideIn} handleSlideIn={handleSlideIn} />

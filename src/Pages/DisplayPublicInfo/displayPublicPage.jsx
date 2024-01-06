@@ -133,7 +133,7 @@ const gotoTweet = ()=>{
           return(
             <div className="box1" key={index}>
               <a href={e.imageUrl} target="_blank" style={{width:"100%", borderRadius:"1rem",display:"flex",alignItems:"center",justifyContent:"center"}}>
-            <img src={e.imageUrl} alt="img" />
+            <img src={e.imageUrl} alt="img" style={{width:"50%"}}/>
             </a>
 
             <p><span className='postee'>Caption -: </span>{e.imageCaption}</p>

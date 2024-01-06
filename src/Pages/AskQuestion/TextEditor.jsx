@@ -38,7 +38,7 @@ const renderToolbar = () => {
     <div className="toolbar">
       {Object.keys(commands).map((command) => (
         <button
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px", marginBottom: "10px"}}
           key={command}
           className="option-button"
           id={commands[command]}
