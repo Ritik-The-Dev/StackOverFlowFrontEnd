@@ -1,77 +1,111 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './displayPublic.css';
 
-function Videoplayer() {
-  const vid = useParams();
-  const player = useRef(null);
+function VideoPlayer() {
 
-  useEffect(() => {
-    if (player.current) {
-      let mouse, intervalId;
-      let isLeftSideHeld = false;
+  const { videoUrl } = useParams();
 
-      const handleDoubleClick = (e) => {
-        if (e.clientX < 300) {
-          player.current.currentTime -= 5;
-        } else if (e.clientX < 500 && e.clientX > 300) {
-          if (player.current.paused) {
-            player.current.play();
-          } else {
-            player.current.pause();
-          }
-        } else if (e.clientX < 800) {
-          player.current.currentTime += 10;
-        }
-      };
+  const videoRef = useRef(null);
+  let holdTimeout;
 
-      const handleMouseDown = (e) => {
-        mouse = setTimeout(() => {
-          if (e.clientX > 500) {
-            player.current.playbackRate = 2;
-          }
-          if (e.clientX < 300) {
-            isLeftSideHeld = true;
-            intervalId = setInterval(() => {
-              if (player.current.currentTime <= 0) {
-                clearInterval(intervalId);
-              } else {
-                player.current.currentTime -= 0.05;
-              }
-            }, 10);
-          }
-        }, 500);
-      };
+  const handleRightTap = (e) => {
+    if (videoRef.current) {
+      e.preventDefault();
+      videoRef.current.currentTime += 10;
+      if (videoRef.current) {
+      if(videoRef.current.playbackRate === 2){
+        videoRef.current.playbackRate = 1;
+      }
+    }}
+  };
 
-      const handleMouseUp = () => {
-        clearTimeout(mouse);
-        clearInterval(intervalId);
-        if (isLeftSideHeld) {
-          player.current.playbackRate = 1;
-          isLeftSideHeld = false;
-        }
-      };
-
-      player.current.addEventListener('dblclick', handleDoubleClick);
-      player.current.addEventListener('mousedown', handleMouseDown);
-      document.addEventListener('mouseup', handleMouseUp);
-
-      return () => {
-        player.current.removeEventListener('dblclick', handleDoubleClick);
-        player.current.removeEventListener('mousedown', handleMouseDown);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
+  const handleLeftTap = (e) => {
+    if (videoRef.current) {
+      e.preventDefault();
+      videoRef.current.currentTime -= 5;
     }
-  }, []);
+  };
 
-  return (
-    <div style={{ marginTop: '50px', height:"100vh" }}>
-      <div style={{ width: '800px', height: '450px' }}>
-        <video controls controlsList="nofullscreen" ref={player} style={{ width: '800px', height: '450px' }}>
-          <source src={vid.videoUrl} type="video/mp4" />
+  const handleMiddle = (e) => {
+    if (videoRef.current) {
+      e.preventDefault();
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  };
+
+  const handleRightHoldStart = () => {
+    holdTimeout = setInterval(() => {
+      if (videoRef.current) {
+        videoRef.current.playbackRate = 2; 
+      }
+    }, 1000);
+  };
+
+  const handleRightHoldEnd = () => {
+    clearInterval(holdTimeout);
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 1; 
+    }
+  };
+
+  const handleLeftHoldStart = () => {
+    holdTimeout = setInterval(() => {
+      if (videoRef.current) {
+        videoRef.current.currentTime -= 0.05;  // Adjust rewind speed here
+      }
+    }, 10);
+  };
+
+  const handleLeftHoldEnd = () => {
+    clearInterval(holdTimeout);
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 1; 
+    }
+  };
+ return (
+    <div style={{position:"absolute",background:"black",zIndex:"20",left:"0",top:"0",height:"100vh",overflow:"hidden"}}>
+      <div>
+        <video
+          ref={videoRef}
+          className=" mainVideo"
+          loop
+          controls
+          controlsList="nofullscreen"
+        >
+          <source src={videoUrl} />
         </video>
       </div>
+      <div className="mainVideo1">
+        <div
+          className="mainVideo2"
+          onDoubleClick={handleLeftTap}
+          onMouseDown={handleLeftHoldStart}
+          onMouseUp={handleLeftHoldEnd}
+          onTouchStart={handleLeftHoldStart}
+          onTouchEnd={handleLeftHoldEnd}
+        ></div>
+
+        <div
+          className="mainVideo3"
+          onDoubleClick={handleMiddle}
+        ></div>
+
+        <div
+          className=" mainVideo4"
+          onDoubleClick={handleRightTap}
+          onMouseDown={handleRightHoldStart}
+          onMouseUp={handleRightHoldEnd}
+          onTouchStart={handleRightHoldStart}
+          onTouchEnd={handleRightHoldEnd}
+        ></div>
+      </div>
     </div>
-  );
+ );
 }
 
-export default Videoplayer;
+export default VideoPlayer;

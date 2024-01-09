@@ -159,7 +159,7 @@ const renderToolbar = () => {
       </div>
       <div
       className='editor'
-      style={{height:"22rem", width:"96%", border:"none"}}
+      style={{height:"22rem", width:"96%", border:"none",overflowY:"auto"}}
         id="text-input"
         contentEditable
         dangerouslySetInnerHTML={{ __html: '' }}
